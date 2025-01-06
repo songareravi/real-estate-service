@@ -1,4 +1,5 @@
 {
+   "type": "module",
   "name": "real_estate_management_service",
   "version": "1.0.0",
   "main": "index.js",

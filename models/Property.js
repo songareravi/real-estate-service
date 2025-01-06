@@ -1,4 +1,5 @@
 import { Schema, model } from 'mongoose';
+import mongoose from 'mongoose';
 
 const propertySchema = new Schema({
   type: String,
@@ -11,8 +12,7 @@ const propertySchema = new Schema({
   size: String,
   images: [String],
   videos: [String],
-
 });
 
-// const Property = mongoose.model('Property', propertySchema);
-export default model('Property', propertySchema);
+export default mongoose.model('Property', propertySchema);
+// export default Property;
