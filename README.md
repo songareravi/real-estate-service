@@ -3,3 +3,4 @@ Initialize the Node Project using:
 npm init
 npm install express
 npm install cors
+npm install mongoose --save
