@@ -3,11 +3,12 @@ import Property from '../models/Property.js';
 // Add Property
 export const addProperty = async (req, res) => {
   try {
+   
     console.log('in addPropertycls',req.body);
-    const {type, price, phone,email, description, location,size,googleLocation,images,videos} = req.body;
-    // const images = req.files.images?.map(file => file.path) || [];
-    // const videos = req.files.videos?.map(file => file.path) || [];
-    console.log('creatind model');
+    const {type, price, phone,email, description, location,size,googleLocation} = req.body;
+    const images = req.files.images?.map(file => `uploads/${file.filename}`) || [];
+    const videos = req.files.videos?.map(file => `uploads/${file.filename}`) || [];
+    console.log('creatind model',req.body);
     const property = new Property({
       type,
       price,
@@ -16,7 +17,9 @@ export const addProperty = async (req, res) => {
       description,
       location,
       googleLocation,
-      size
+      size,
+      images,
+      videos
     });
     console.log('before saving',property);
     await property.save();
@@ -38,3 +41,5 @@ export const getPropertyByLocation = async (req, res) => {
     res.status(500).send(error);
   }
 };
+
+

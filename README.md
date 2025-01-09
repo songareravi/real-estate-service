@@ -4,3 +4,4 @@ npm init
 npm install express
 npm install cors
 npm install mongoose --save
+ npm i multer

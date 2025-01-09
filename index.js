@@ -1,16 +1,8 @@
-console.log('Hello world');
-
-
-// Entry Point of the API Server 
 import express from 'express';
-
-//To solve cross origin issue
 import cors from 'cors';
-//To parse body installing library
-import  json  from 'body-parser';
-import Property from './models/Property.js';
 import { connect } from 'mongoose';
 import propertyRoutes from './routes/propertyRoutes.js';
+import path from 'path';
 
 main().catch(err => console.log(err));
 
@@ -21,21 +13,18 @@ async function main() {
 }
 
 
-/* Creates an Express application. 
-   The express() function is a top-level 
-   function exported by the express module.
-*/
-
 const app = express();
 const port = 8080;
+const __dirname = path.resolve();
 
 //Enabling cross origin req by middlewear
 app.use(cors());
 //adding body parser as middlewear
-app.use(json());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 // Routes
 app.use('/api/properties', propertyRoutes);
-
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 // Create a Server and run it on the port 8080
 app.listen(port, () => {
