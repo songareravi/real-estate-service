@@ -1,3 +1,4 @@
+import Address from '../models/Address.js';
 import Property from '../models/Property.js';
 
 // Add Property
@@ -52,4 +53,32 @@ export const getHello = async (req, res) => {
   }
 };
 
+// Get Property By Location
+export const getAddress = async (req, res) => {
+  try {
+    console.log('in getAddresses',req.query.location);
+    const address = await Address.find();
+    console.log('addresses',address);
+        if (!address) return res.status(404).send();
+    res.send(address);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
 
+
+export const saveAddress = async (req, res) => {
+  try {
+   
+    console.log('in SaveAddress',req.body);
+    const {location} = req.body;
+    const address = new Address({
+      location
+    });
+    console.log('before saving',address);
+    await address.save();
+    res.status(201).send(address);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+};
