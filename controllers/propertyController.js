@@ -19,7 +19,8 @@ export const addProperty = async (req, res) => {
       googleLocation,
       size,
       images,
-      videos
+      videos,
+      rentOrSell
     });
     console.log('before saving',property);
     await property.save();
