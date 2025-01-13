@@ -31,6 +31,7 @@ router.post('/add', upload.fields([{ name: 'images' }, { name: 'videos' }]), add
 // router.post('/add', addProperty);
 // router.get('/search', getAllProperties);
 router.get('/search', getPropertyByLocation);
+router.get('/hii', getPropertyByLocation);
 // router.put('/:id', upload.fields([{ name: 'images' }, { name: 'videos' }]), updateProperty);
 // router.delete('/:id', deleteProperty);
 

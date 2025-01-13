@@ -42,4 +42,13 @@ export const getPropertyByLocation = async (req, res) => {
   }
 };
 
+// Get Property By Location
+export const getHello = async (req, res) => {
+  try { 
+    res.send("hello");
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
 
