@@ -25,6 +25,13 @@ export const addProperty = async (req, res) => {
     });
     console.log('before saving',property);
     await property.save();
+
+    const address = new Address({
+      location
+    });
+    console.log('before saving address',address);
+    await address.save();
+
     res.status(201).send(property);
   } catch (error) {
     res.status(400).send(error);
@@ -35,8 +42,21 @@ export const addProperty = async (req, res) => {
 // Get Property By Location
 export const getPropertyByLocation = async (req, res) => {
   try {
-    console.log('in getpropertyByLocationn',req.query.location);
-    const property = await Property.find({'location':req.query.location});
+    console.log('in getpropertyByLocationn',req.query);
+    const query = {};
+    if (req.query.location) query.location = req.query.location; // Match location
+    if (req.query.rentOrSell) query.rentOrSell = req.query.rentOrSell; // Match type
+    // if (req.query.price) query.price = { $lte: parseFloat(req.query.price) };
+    // Fetch data from MongoDB using the built query
+    const property = await Property.find(query);
+
+    // let property;
+    // if(req.query.rentOrSell) {
+    //    property = await Property.find({'location':req.query.location,'rentOrSell':req.query.rentOrSell });
+    // }else{
+    //    property = await Property.find({'location':req.query.location });
+    // }
+    
         if (!property) return res.status(404).send();
     res.send(property);
   } catch (error) {
