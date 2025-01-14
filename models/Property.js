@@ -9,6 +9,7 @@ const propertySchema = new Schema({
   description: String,
   location: String,
   googleLocation: String,
+  rentOrSell:String,
   size: String,
   images: [String],
   videos: [String],
