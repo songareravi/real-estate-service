@@ -6,7 +6,7 @@ export const addProperty = async (req, res) => {
   try {
    
     console.log('in addPropertycls',req.body);
-    const {type, price, phone,email, description, location,size,googleLocation} = req.body;
+    const {type, price, phone,email, description, location,size,googleLocation,rentOrSell} = req.body;
     const images = req.files.images?.map(file => `uploads/${file.filename}`) || [];
     const videos = req.files.videos?.map(file => `uploads/${file.filename}`) || [];
     console.log('creatind model',req.body);
