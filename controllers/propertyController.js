@@ -76,8 +76,15 @@ export const getHello = async (req, res) => {
 // Get Property By Location
 export const getAddress = async (req, res) => {
   try {
+    console.log('in getAddresses',req.query);
     console.log('in getAddresses',req.query.location);
-    const address = await Address.find();
+    const location = req.query.location;
+    //MongoDB Equivalent Query(using the MongoDB shell or a tool like MongoDB Compass)
+    //db.addresses.find({ location: { $regex: '^vi', $options: 'i' } })
+
+     // Use a regular expression to match documents where 'location' starts with the input i is for caes insensitive search
+      const address = await Address.find({ location: new RegExp(`^${location}`, 'i') });
+    // const address = await Address.find();
     console.log('addresses',address);
         if (!address) return res.status(404).send();
     res.send(address);
