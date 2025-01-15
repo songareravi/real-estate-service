@@ -46,6 +46,7 @@ export const getPropertyByLocation = async (req, res) => {
     const query = {};
     if (req.query.location) query.location = req.query.location; // Match location
     if (req.query.rentOrSell) query.rentOrSell = req.query.rentOrSell; // Match type
+    if (req.query.type) query.type = req.query.type; // Match type
     if (req.query.priceMin) query.price = { $gte: parseFloat(req.query.priceMin) };
     if (req.query.priceMax) query.price = { $lte: parseFloat(req.query.priceMax) };
     // Fetch data from MongoDB using the built query
