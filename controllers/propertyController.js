@@ -46,7 +46,8 @@ export const getPropertyByLocation = async (req, res) => {
     const query = {};
     if (req.query.location) query.location = req.query.location; // Match location
     if (req.query.rentOrSell) query.rentOrSell = req.query.rentOrSell; // Match type
-    // if (req.query.price) query.price = { $lte: parseFloat(req.query.price) };
+    if (req.query.priceMin) query.price = { $gte: parseFloat(req.query.priceMin) };
+    if (req.query.priceMax) query.price = { $lte: parseFloat(req.query.priceMax) };
     // Fetch data from MongoDB using the built query
     const property = await Property.find(query);
 
@@ -79,13 +80,13 @@ export const getAddress = async (req, res) => {
     console.log('in getAddresses',req.query);
     console.log('in getAddresses',req.query.location);
     const location = req.query.location;
-    //MongoDB Equivalent Query(using the MongoDB shell or a tool like MongoDB Compass)
+    //MongoDB Equivalent Query(using the MongoDB shell or a tool like MongoDB Compass)cls
     //db.addresses.find({ location: { $regex: '^vi', $options: 'i' } })
 
      // Use a regular expression to match documents where 'location' starts with the input i is for caes insensitive search
       const address = await Address.find({ location: new RegExp(`^${location}`, 'i') });
     // const address = await Address.find();
-    console.log('addresses',address);
+   // console.log('addresses',address);
         if (!address) return res.status(404).send();
     res.send(address);
   } catch (error) {
