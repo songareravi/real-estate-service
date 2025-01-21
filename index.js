@@ -18,13 +18,22 @@ const port = 8080;
 const __dirname = path.resolve();
 
 //Enabling cross origin req by middlewear
-app.use(cors());
+// app.use(cors());
 //adding body parser as middlewear
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+
 // Routes
 app.use('/api/properties', propertyRoutes);
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+
+// Middleware to serve static files from the React app's build folder
+app.use(express.static(path.join(__dirname, 'build')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 // Create a Server and run it on the port 8080
 app.listen(port, () => {
