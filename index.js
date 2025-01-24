@@ -3,20 +3,29 @@ import cors from 'cors';
 import { connect } from 'mongoose';
 import propertyRoutes from './routes/propertyRoutes.js';
 import path from 'path';
+import {MongoClient,ServerApiVersion} from 'mongodb';
+const uri = "mongodb+srv://adityanair954:Hunchman%401234@real-estate-manager.8uqgb.mongodb.net/realEsateDb?retryWrites=true&w=majority&appName=real-estate-manager";
 
 main().catch(err => console.log(err));
 
 async function main() {
+  try{
   // await connect('mongodb://127.0.0.1:27017/realEsateDb');
-  await connect('mongodb+srv://adityanair954:<Hunchman@1234>@real-estate-manager.8uqgb.mongodb.net/?retryWrites=true&w=majority&appName=real-estate-manager');
+  await connect(uri,{
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    tlsInsecure: true,
+  });
   console.log('Connected to db')
+} catch (error) {
+  console.error("Error connecting to MongoDB:", error);
+}
   // use `await mongoose.connect('mongodb://user:password@127.0.0.1:27017/test');` if your database has auth enabled
 }
 
 
 
 // const { MongoClient, ServerApiVersion } = require('mongodb');
-// const uri = "mongodb+srv://adityanair954:<Hunchman@1234>@real-estate-manager.8uqgb.mongodb.net/?retryWrites=true&w=majority&appName=real-estate-manager";
  
 // // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 // const client = new MongoClient(uri, {
@@ -50,7 +59,7 @@ const port = 8080;
 const __dirname = path.resolve();
 
 //Enabling cross origin req by middlewear
-// app.use(cors());
+app.use(cors());
 //adding body parser as middlewear
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
