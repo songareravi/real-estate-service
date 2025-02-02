@@ -22,7 +22,7 @@ const __dirname = path.resolve();
 // Multer Setup
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, '../uploads'));
+    cb(null, path.join(__dirname, './uploads'));
   },
   filename: (req, file, cb) => {
     cb(null, `${Date.now()}-${file.originalname}`);
@@ -35,7 +35,7 @@ const upload = multer({ storage });
 router.post('/add', upload.fields([{ name: 'images' }, { name: 'videos' }]), addProperty);
 // router.post('/add', addProperty);
 // router.get('/search', getAllProperties);
-router.get('/search', getPropertyByLocation);
+// router.get('/search', getPropertyByLocation);
 router.get('/hii', getHello);
 router.get('/address', getAddress);
 router.post('/address', saveAddress);

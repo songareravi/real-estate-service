@@ -67,7 +67,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use('/api/properties', propertyRoutes);
-app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+app.use('/uploads', express.static(path.join(__dirname, './uploads')));
 
 // Middleware to serve static files from the React app's build folder
 app.use(express.static(path.join(__dirname, 'build')));
