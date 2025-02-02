@@ -35,7 +35,7 @@ const upload = multer({ storage });
 router.post('/add', upload.fields([{ name: 'images' }, { name: 'videos' }]), addProperty);
 // router.post('/add', addProperty);
 // router.get('/search', getAllProperties);
-// router.get('/search', getPropertyByLocation);
+router.get('/search', getPropertyByLocation);
 router.get('/hii', getHello);
 router.get('/address', getAddress);
 router.post('/address', saveAddress);
