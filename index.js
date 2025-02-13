@@ -3,7 +3,9 @@ import cors from 'cors';
 import { connect } from 'mongoose';
 import propertyRoutes from './routes/propertyRoutes.js';
 import path from 'path';
+import bcrypt from 'bcryptjs';
 import {MongoClient,ServerApiVersion} from 'mongodb';
+import User from './models/User.js';
 const uri = "mongodb+srv://adityanair954:Hunchman%401234@real-estate-manager.8uqgb.mongodb.net/realEsateDb?retryWrites=true&w=majority&appName=real-estate-manager";
 
 main().catch(err => console.log(err));
@@ -75,6 +77,17 @@ app.use(express.static(path.join(__dirname, 'build')));
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
+
+// Seed Admin Credentials (Run only once)
+async function seedAdmin() {
+  const existingAdmin = await User.findOne({ username: "admin" });
+  if (!existingAdmin) {
+    const hashedPassword = await bcrypt.hash("password", 10);
+    await User.create({ username: "admin", password: hashedPassword });
+    console.log("Admin Created!");
+  }
+}
+seedAdmin();
 
 // Create a Server and run it on the port 8080
 app.listen(port, () => {

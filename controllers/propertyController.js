@@ -1,5 +1,6 @@
 import Address from '../models/Address.js';
 import Property from '../models/Property.js';
+import User from '../models/User.js';
 
 // Add Property
 export const addProperty = async (req, res) => {
@@ -97,6 +98,51 @@ export const getAddress = async (req, res) => {
 
 
 export const saveAddress = async (req, res) => {
+  try {
+   
+    console.log('in SaveAddress',req.body);
+    const {location} = req.body;
+    const address = new Address({
+      location
+    });
+    console.log('before saving',address);
+    await address.save();
+    res.status(201).send(address);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+};
+
+
+
+//Login 
+export const login =async (req, res) => async (req, res) => {
+  const { username, password } = req.body;
+  const user = await User.findOne({ username });
+
+  if (!user) return res.status(401).json({ message: "Invalid credentials" });
+
+  const isMatch = await bcrypt.compare(password, user.password);
+  if (!isMatch) return res.status(401).json({ message: "Invalid credentials" });
+
+  const token = jwt.sign({ username: user.username }, SECRET_KEY, { expiresIn: "1h" });
+  res.json({ token });
+}
+
+export const updateProperty = async (req, res) => {
+  try {
+   
+    // console.log('in SaveAddress',req.body);
+  
+    // console.log('before saving',address);
+    await Property.findByIdAndUpdate(req.params.id, req.body);
+    res.status(201).send(address);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+};
+
+export const deleteProperty = async (req, res) => {
   try {
    
     console.log('in SaveAddress',req.body);
