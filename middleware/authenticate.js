@@ -1,3 +1,7 @@
+import jwt from 'jsonwebtoken';
+
+const SECRET_KEY = "your_secret_key"; // Change this in production
+
 // Middleware to Protect Routes
 export const authenticate = (req, res, next) => {
   const token = req.headers.authorization?.split(" ")[1];

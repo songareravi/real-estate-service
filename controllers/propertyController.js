@@ -1,7 +1,10 @@
 import Address from '../models/Address.js';
 import Property from '../models/Property.js';
 import User from '../models/User.js';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
+const SECRET_KEY = "your_secret_key"; // Change this in production
 // Add Property
 export const addProperty = async (req, res) => {
   try {
@@ -116,13 +119,14 @@ export const saveAddress = async (req, res) => {
 
 
 //Login 
-export const login =async (req, res) => async (req, res) => {
+export const login =async (req, res) => {
+  console.log('insde login with',req.body);
   const { username, password } = req.body;
   const user = await User.findOne({ username });
-
+console.log("user returned :",user);
   if (!user) return res.status(401).json({ message: "Invalid credentials" });
 
-  const isMatch = await bcrypt.compare(password, user.password);
+  const isMatch = bcrypt.compare(password, user.password);
   if (!isMatch) return res.status(401).json({ message: "Invalid credentials" });
 
   const token = jwt.sign({ username: user.username }, SECRET_KEY, { expiresIn: "1h" });
@@ -145,15 +149,14 @@ export const updateProperty = async (req, res) => {
 export const deleteProperty = async (req, res) => {
   try {
    
-    console.log('in SaveAddress',req.body);
+    console.log('in deleteProperty',req.body);
     const {location} = req.body;
-    const address = new Address({
-      location
-    });
-    console.log('before saving',address);
-    await address.save();
-    res.status(201).send(address);
+ 
+    console.log('before deleting req.params.id:',req.params.id);
+    var res =await Property.findByIdAndDelete(req.params.id);
+    res.status(201).send("deleted");
   } catch (error) {
+    console.log('error in delete property:',error);
     res.status(400).send(error);
   }
 };
